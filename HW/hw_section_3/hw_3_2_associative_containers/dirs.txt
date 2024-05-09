@@ -1,0 +1,4 @@
+/root/dir/text.text
+/dev/bin
+/asd/bin/dev/test.cpp
+/dit
