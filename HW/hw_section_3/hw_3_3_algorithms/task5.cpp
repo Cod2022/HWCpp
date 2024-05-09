@@ -28,7 +28,7 @@ void Process(const std::vector<T>& data) {
 Этот код почему-то не работает. Найдите ошибку и сдайте исправленное решение.
 */
 
-// Решил сам:
+// Моё решение:
 #include <algorithm>
 #include <vector>
 
