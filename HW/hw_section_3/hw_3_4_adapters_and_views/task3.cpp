@@ -39,7 +39,7 @@ int main() {
             pq.push(num);
         } else if (request == "EXTRACT") {
             if (pq.empty()) {
-                std::cout << "CANNOT";
+                std::cout << "CANNOT\n";
             } else {
                 std::cout << pq.top() << "\n";
                 pq.pop();
