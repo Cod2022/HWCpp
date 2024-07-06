@@ -20,3 +20,30 @@ CLEAR, ADD и EXTRACT — каждый в отдельной строке.
 
 Для каждого запроса типа EXTRACT выведите его результат в отдельной строке.
 */
+#include <iostream>
+#include <string>
+#include <queue>
+
+int main() {
+    std::priority_queue<int> pq;
+
+    std::string request;
+    while (std::cin >> request) {
+        if (request == "CLEAR") {
+            while (!pq.empty()) {
+                pq.pop();
+            }
+        } else if (request == "ADD") {
+            int num;
+            std::cin >> num;
+            pq.push(num);
+        } else if (request == "EXTRACT") {
+            if (pq.empty()) {
+                std::cout << "CANNOT";
+            } else {
+                std::cout << pq.top() << "\n";
+                pq.pop();
+            }
+        }
+    }
+}
