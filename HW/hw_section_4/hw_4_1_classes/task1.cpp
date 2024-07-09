@@ -46,7 +46,7 @@ private:
 
         if ((year < min_year || year > max_year) ||\
             (month < min_month || month > max_month) ||\
-            (day < min_month || day > max_day)) {
+            (day < min_day || day > max_day)) {
             return false;
         } if ((days_30.find(month) != days_30.end()) && day > 30) {
             return false;
