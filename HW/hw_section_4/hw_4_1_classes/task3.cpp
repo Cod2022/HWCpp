@@ -132,5 +132,4 @@ int main() {
     bool res = r == b;
     std::cout << res;
     // std::cout << r.GetNumerator() << "/" << r.GetDenominator();
-
 }
