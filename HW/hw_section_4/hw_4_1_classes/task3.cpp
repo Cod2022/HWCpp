@@ -96,6 +96,7 @@ public:
 Rational operator + (const Rational& lhs, const Rational& rhs) {
     Rational result = lhs;
     result += rhs;
+    return result;
 }
 
 Rational operator - (const Rational& lhs, const Rational rhs) {
