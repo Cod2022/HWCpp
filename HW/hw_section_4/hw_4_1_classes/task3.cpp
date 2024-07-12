@@ -44,7 +44,82 @@ public:
     int GetDenominator() {
         return denominator;
     }
+
+    // унарный плюс (формально ничего не меняет)
+    Rational operator + () const {
+        return {numerator, denominator};
+    }
+
+    // унарный минус
+    Rational operator - () const {
+        return Rational(-numerator, denominator);
+    }
+
+    Rational& operator += (const Rational& rhs) {
+        numerator = numerator * rhs.denominator + rhs.numerator;
+        denominator *= rhs.denominator;
+        Reduce();
+        return *this;
+    }
+
+    Rational& operator -= (const Rational& rhs) {
+        numerator = numerator * rhs.denominator - rhs.numerator * denominator;
+        denominator *= rhs.denominator;
+        Reduce();
+        return *this;
+    }
+
+    Rational& operator *= (const Rational& rhs) {
+        numerator *= rhs.numerator;
+        denominator *= rhs.denominator;
+        Reduce();
+        return *this;
+    }
+
+    Rational& operator /= (const Rational& rhs) {
+        int tmp = rhs.numerator;
+        numerator *= rhs.denominator;
+        denominator *= tmp;
+        Reduce();
+        return *this;
+    }
+
+    bool operator == (const Rational& rhs) {
+        return numerator == rhs.numerator && denominator == rhs.denominator;
+    }
+
+    bool operator != (const Rational& rhs) {
+        return !(numerator == rhs.numerator) && !(denominator == rhs.denominator);
+    }
 };
+
+Rational operator + (const Rational& lhs, const Rational& rhs) {
+    Rational result = lhs;
+    result += rhs;
+}
+
+Rational operator - (const Rational& lhs, const Rational rhs) {
+    Rational result = lhs;
+    result -= rhs;
+    return result;
+}
+
+Rational operator * (const Rational& lhs, const Rational& rhs) {
+    Rational result = lhs;
+    result *= rhs;
+    return result;
+}
+
+Rational operator / (const Rational& lhs, const Rational& rhs) {
+    Rational result = lhs;
+    result /= rhs;
+    return result;
+}
+
+
+
+
+
 
 int main() {
     // int a = 5;
@@ -53,6 +128,9 @@ int main() {
     // int r = b / res;
     // std::cout << r;
     Rational r(6, 9);
-    std::cout << r.GetNumerator() << "/" << r.GetDenominator();
+    Rational b(6, 9);
+    bool res = r == b;
+    std::cout << res;
+    // std::cout << r.GetNumerator() << "/" << r.GetDenominator();
 
 }
