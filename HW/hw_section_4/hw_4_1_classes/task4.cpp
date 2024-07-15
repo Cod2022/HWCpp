@@ -49,9 +49,20 @@ private:
     Node root;
 
 public:
-    bool Has(const std::vector<std::string>& node) const;
+    bool Has(const std::vector<std::string>& node) const {
+        const Node* temp = &root;
+        for (auto const elem : node) {
+            if(!temp->children.contains(elem)) {
+                return false;
+            }
+            temp = &temp->children.at(elem);
+        }
+        return true;
+    };
+    
     void Insert(const std::vector<std::string>& node);
     void Delete(const std::vector<std::string>& node);
+
 };
 
 // Ваш код будет вставлен сюда
