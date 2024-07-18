@@ -145,15 +145,40 @@ private:
         return d1 + d2 > K;
     }
 
-    bool CheckDiagonal1(size_t i, size_t j) const;
+    bool CheckDiagonal1(size_t i, size_t j) const {
+        size_t d1 = 0;
+        while (d1 <= i && d1 <= j && Table[i - d1][j - d1] == Table[i][j]) {
+            ++d1;
+        }
 
-    bool CheckDiagonal2(size_t i, size_t j) const;
+        size_t d2 = 0;
+        while (i + d2 < N && j + d2 < N && Table[i + d2][j + d2] == Table[i][j]) {
+            ++d2;
+        }
+ 
+        return d1 + d2 > K;
+
+    }
+
+    bool CheckDiagonal2(size_t i, size_t j) const {
+        size_t d1 = 0;
+        while (d1 <= i && j + d1 < N && Table[i - d1][j + d1] == Table[i][j]) {
+            ++d1;
+        }
+ 
+        size_t d2 = 0;
+        while (i + d2 < N && d2 <= j && Table[i + d2][j - d2] == Table[i][j]) {
+            ++d2;
+        }
+ 
+        return d1 + d2 > K;
+    }
 
 public:
     TicTacToe(size_t n, size_t k): N(n), K(k), currentPlayer(1) {
-        Table.reserve(N);
+        Table.resize(N);
         for (size_t i = 0; i != N; ++i) {
-            Table[i].reserve(K);
+            Table[i].resize(N);
         }
     }
 
@@ -168,9 +193,7 @@ public:
     bool Set(size_t i, size_t j) {  // возвращает true, если ход завершился выигрышем
         Table[i][j] = currentPlayer;
         currentPlayer = currentPlayer % 2 + 1;
-        // bool wins = CheckRow(i, j) || CheckColumn(i, j) || CheckDiagonal1(i, j) || CheckDiagonal2(i, j);
-        bool wins = CheckRow(i, j) || CheckColumn(i, j);
-        // bool wins = true;
+        bool wins = CheckRow(i, j) || CheckColumn(i, j) || CheckDiagonal1(i, j) || CheckDiagonal2(i, j);
         return wins;
     }
 
@@ -181,16 +204,16 @@ public:
         for (size_t j = 0; j != field.K; ++j) {
             switch (field(i, j)) {
                 case 0:
-                    std::cout << '.';
+                        out << '.';
                     break;
                 case 1:
-                    std::cout << 'X';
+                        out << 'X';
                     break;
                 case 2:
-                    std::cout << 'O';
+                        out << 'O';
             }
         }
-        std::cout << "\n";
+        out << "\n";
     }
     return out;
 }
