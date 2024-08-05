@@ -28,6 +28,7 @@
 */
 #include <iostream>
 #include <vector>
+#include <utility>
 
 template <typename T>
 class Table {
@@ -50,11 +51,36 @@ public:
     std::vector<T>& operator [] (std::size_t i) {
         return data[i];
     }
+
+    size_t GetRows(const Table<T>& data) const {
+        return data.size();
+    }
+
+    size_t GetColumns(const Table<T>& data) const {
+        if (data.empty()){
+            return 0;
+        }
+        return data[0].size();
+    }
+
+    std::pair<size_t, size_t> size() const {
+        return {data.size(), data[0].size()};
+    }
+
+    void resize(size_t rows, size_t columns) {
+        data.resize(rows);
+        for (size_t i = 0; i != rows; ++i) {
+            data[i].resize(columns);
+        }
+    }
 };
 
 int main() {
     Table<int> t(3, 4);
 
     t[0][0] = 3;
-    std::cout << t[0][0];
+    std::cout << t[0][0] << "\n";
+    std::pair<size_t, size_t> s = t.size();
+    std::cout << s.first;
+    t.resize(2, 6);
 }
