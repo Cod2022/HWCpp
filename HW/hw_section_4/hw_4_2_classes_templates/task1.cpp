@@ -26,3 +26,24 @@
 возвращающая std::pair<size_t, size_t> — размер таблицы 
 (в том же порядке, в котором эти аргументы передавались в конструктор).
 */
+#include <iostream>
+#include <vector>
+
+template <typename T>
+class Table {
+private:
+    std::vector<std::vector<T>> data;
+
+public:
+
+    Table(size_t rows, size_t columns) {
+        data.resize(rows);
+        for (auto& row : data) {
+            row.resize(columns);
+        }
+    }
+};
+
+int main() {
+    Table<int> t(3, 4);
+}
