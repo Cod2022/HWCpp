@@ -42,8 +42,19 @@ public:
             row.resize(columns);
         }
     }
+
+    const std::vector<T>& operator [] (std::size_t i) const {
+        return data[i];
+    }
+
+    std::vector<T>& operator [] (std::size_t i) {
+        return data[i];
+    }
 };
 
 int main() {
     Table<int> t(3, 4);
+
+    t[0][0] = 3;
+    std::cout << t[0][0];
 }
