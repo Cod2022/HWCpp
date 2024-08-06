@@ -26,3 +26,42 @@ class Queue;
 
 8.Операторы == и != для сравнения двух очередей.
 */
+#include <iostream>
+#include <deque>
+
+template <typename T, typename Container = std::deque<T>>
+class Queue {
+private:
+    Container dq;
+
+public:
+    Queue() = default;
+
+    std::deque<T> GetDq() {
+        return dq;
+    }
+
+    const T& front() const {
+        return dq.front();
+    }
+
+    T& front() {
+        return dq.front();
+    }
+    void pop() {
+        dq.pop_front();
+    }
+
+    void push(T elem) {
+        dq.push_back(elem);
+    }
+};
+
+int main() {
+    Queue<int> dq;
+    int q = dq.front();
+    dq.front() = 6;
+    dq.pop();
+    dq.push(7);
+    std::cout << dq.front();
+}
