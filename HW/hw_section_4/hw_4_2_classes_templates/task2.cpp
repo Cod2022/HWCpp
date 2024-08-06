@@ -37,10 +37,6 @@ private:
 public:
     Queue() = default;
 
-    std::deque<T> GetDq() {
-        return dq;
-    }
-
     const T& front() const {
         return dq.front();
     }
@@ -52,16 +48,38 @@ public:
         dq.pop_front();
     }
 
-    void push(T elem) {
+    void push(const T& elem) {
         dq.push_back(elem);
+    }
+
+    size_t size() {
+        return dq.size();
+    }
+
+    bool empty() {
+        if (dq.empty()) {
+            return true;
+        }
+        return false;
+    }
+    bool operator == (const Queue& other) const {
+        return dq == other.dq;
+    }
+
+    bool operator != (const Queue& other) const {
+        return dq != other.dq;
     }
 };
 
 int main() {
-    Queue<int> dq;
-    int q = dq.front();
-    dq.front() = 6;
-    dq.pop();
-    dq.push(7);
-    std::cout << dq.front();
+    Queue<int> d;
+    Queue<int> fl;
+    d.push(7);
+    d.push(8);
+    fl.push(3);
+    fl.push(8);
+    // fl.push(3);
+    // std::cout << d.front() << "\n";
+    std::cout << d.size() << "\n";
+    std::cout << fl.size() << "\n";
 }
