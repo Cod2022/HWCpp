@@ -47,6 +47,7 @@ public:
 */
 #include <cstddef>
 #include <vector>
+#include <stdexcept>
 
 template <typename T>
 class Deque {
@@ -71,15 +72,37 @@ public:
         tail.clear();
     }
 
-    const T& operator [] (size_t i) const;
+    const T& operator [] (size_t i) const {
+        if (i <= head.size() - 1) {
+            return head[i];
+        }
+        return tail[i];
+    }
 
-    T& operator [] (size_t i);
+    T& operator [] (size_t i) {
+        if (i <= head.size() - 1) {
+            return head[i];
+        }
+        return tail[i];
+    }
 
-    const T& At(size_t i) const;  // throws std::out_of_range on incorrect index
+    const T& At(size_t i) const { // throws std::out_of_range on incorrect index
+        if (i >= Size()) {
+            throw std::out_of_range("Index is out of range!");
+        }
+        return (*this)[i];
+    }  
 
-    T& At(size_t i);  // throws std::out_of_range on incorrect index
+    T& At(size_t i) {
+        if (i >= Size()) { // throws std::out_of_range on incorrect index
+            throw std::out_of_range("Index is out of range!");
+        }
+        return (*this)[i];
+    }  
 
-    const T& Front() const;
+    const T& Front() const {
+
+    }
 
     T& Front();
 
@@ -87,7 +110,15 @@ public:
 
     T& Back();
 
-    void PushFront(const T& elem);
+    void PushFront(const T& elem) {
+        head.push_back(elem);
+    }
 
-    void PushBack(const T& elem);
+    void PushBack(const T& elem) {
+        tail.push_back(elem);
+    }
 };
+
+int main() {
+
+}
