@@ -73,17 +73,17 @@ public:
     }
 
     const T& operator [] (size_t i) const {
-        if (i <= head.size() - 1) {
-            return head[i];
+        if (i < head.size()) {
+            return head[head.size() - i -1];
         }
-        return tail[i];
+        return tail[i - head.size()];
     }
 
     T& operator [] (size_t i) {
-        if (i <= head.size() - 1) {
-            return head[i];
+        if (i < head.size()) {
+            return head[head.size() - i -1];
         }
-        return tail[i];
+        return tail[i - head.size()];
     }
 
     const T& At(size_t i) const { // throws std::out_of_range on incorrect index
@@ -101,14 +101,32 @@ public:
     }  
 
     const T& Front() const {
-
+        if (head.empty()) {
+            return tail.front();
+        }
+        return head.back();
     }
 
-    T& Front();
+    T& Front() {
+        if (head.empty()) {
+            return tail.front();
+        }
+        return head.back();
+    }
 
-    const T& Back() const;
+    const T& Back() const {
+        if (tail.empty()) {
+            return head.front();
+        }
+        return tail.back();
+    }
 
-    T& Back();
+    T& Back() {
+        if (tail.empty()) {
+            return head.front();
+        }
+        return tail.back();
+    }
 
     void PushFront(const T& elem) {
         head.push_back(elem);
@@ -120,5 +138,9 @@ public:
 };
 
 int main() {
-
+    Deque<int> dq;
+    dq.PushBack(1);
+    dq.PushBack(4);
+    dq.PushFront(5);
+    dq.Front();
 }
