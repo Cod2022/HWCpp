@@ -45,6 +45,7 @@ public:
     void PushBack(const T& elem);
 };
 */
+#include <cstddef>
 #include <vector>
 
 template <typename T>
@@ -53,11 +54,22 @@ private:
     std::vector<T> head, tail;
 
 public:
-    bool Empty() const;
+    bool Empty() const {
+        if (head.empty() && tail.empty()) {
+            return true;
+        }
+        return false;
+    }
 
-    size_t Size() const;
+    size_t Size() const {
+        size_t size = head.size() + tail.size();
+        return size;
+    }
 
-    void Clear();
+    void Clear() {
+        head.clear();
+        tail.clear();
+    }
 
     const T& operator [] (size_t i) const;
 
