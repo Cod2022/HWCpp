@@ -113,6 +113,7 @@ class MathVector {
     MathVector(Iter first, Iter last) {
         while (first != last) {
             data.push_back(*first);
+            ++first;
         }
     }
 
@@ -159,12 +160,19 @@ MathVector<T> operator * (const MathVector<T>& v, const T& scalar) {
 }
 
 template <typename T>
-MathVector<T> operator * (const T& scalar, const MathVector<T>& v) {
-    return v * scalar;
+MathVector<T>& operator * (MathVector<T>& v, const T& scalar) {
+    return v *= scalar;
 }
 
 int main() {
-    MathVector<int> v(5);
+    MathVector<int> v(5); // пустой вектор длиной 5
+    std::vector<int> v2 = {1, 2, 3, 4, 5};
+    MathVector<int> v3(v2.begin(), v2.end()); // инициализируем вектор с помощью второго конструктора(через Iter)
 
-    std::cout << v;
+    std::cout << v << "\n";
+    std::cout << v3;
+
+    int scalar = 3;
+    v3 * scalar;
+    std::cout << v3 << "\n";
 }
