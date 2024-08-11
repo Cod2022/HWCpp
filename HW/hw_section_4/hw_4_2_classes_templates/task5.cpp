@@ -126,7 +126,7 @@ class MathVector {
     }
 
     const T& operator [] (size_t i) const {
-        return data[i];
+        return data.at(i);
     }
 };
 
@@ -145,6 +145,26 @@ std::ostream& operator << (std::ostream& out, const MathVector<T>& v) {
 }
 
 template <typename T>
+MathVector<T>& operator += (MathVector<T>& v1, const MathVector<T>& v2) {
+    for (size_t i = 0; i != v1.Dimension(); ++i) {
+        v1[i] += v2[i];
+    }
+    return v1;
+}
+
+template <typename T>
+MathVector<T> operator + (const MathVector<T>& v1, const MathVector<T>& v2) {
+    auto tmp(v1);
+    tmp += v2;
+    return tmp;
+}
+
+// template <typename T>
+// MathVector<T> operator + (const MathVector<T>& v1, const MathVector<T>& v2) {
+//     return v1 + v2;
+// }
+
+template <typename T>
 MathVector<T>& operator *= (MathVector<T>& v, const T& scalar) {
     for (size_t i = 0; i != v.Dimension(); ++i) {
         v[i] *= scalar;
@@ -160,8 +180,8 @@ MathVector<T> operator * (const MathVector<T>& v, const T& scalar) {
 }
 
 template <typename T>
-MathVector<T>& operator * (MathVector<T>& v, const T& scalar) {
-    return v *= scalar;
+MathVector<T> operator * (const T& scalar, const MathVector<T>& v) {
+    return v * scalar;
 }
 
 int main() {
@@ -170,9 +190,11 @@ int main() {
     MathVector<int> v3(v2.begin(), v2.end()); // инициализируем вектор с помощью второго конструктора(через Iter)
 
     std::cout << v << "\n";
-    std::cout << v3;
+    std::cout << v3 << "\n";
 
     int scalar = 3;
-    v3 * scalar;
+    v = v3 * scalar;
+    // v3 * scalar;
     std::cout << v3 << "\n";
+    std::cout << v << "\n";
 }
