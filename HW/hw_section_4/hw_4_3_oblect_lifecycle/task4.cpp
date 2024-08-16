@@ -18,5 +18,8 @@ Logger& operator = (Logger&&): 1 2
 #include <utility>
 
 int main() {
-    
+    Logger l1;
+    Logger l2;
+    l1 = l2;
+    l1 = std::move(l2);
 }
