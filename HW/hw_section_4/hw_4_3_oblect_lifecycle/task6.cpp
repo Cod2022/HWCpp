@@ -16,3 +16,16 @@ Logger(): n
 Ваша программа должна каким-либо образом создать nn объектов типа C, 
 а затем уничтожить их в обратном порядке.
 */
+#include "logger.h"
+#include <list>
+#include <iostream>
+
+int main() {
+    int n;
+    std::list<Logger> v1;
+    std::cin >> n;
+
+    for (int i = 0; i != n; ++i) {
+        v1.emplace_front();
+    }
+}
