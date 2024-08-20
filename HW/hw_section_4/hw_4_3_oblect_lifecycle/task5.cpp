@@ -13,3 +13,14 @@ Logger(): 3
 ~Logger(): 1
 
 */
+#include "logger.h"
+#include <utility>
+#include <list>
+
+int main() {
+    std::list<Logger> container;
+    Logger l1;
+    container.emplace_back();
+    Logger l3;
+    container.pop_front();   
+}
