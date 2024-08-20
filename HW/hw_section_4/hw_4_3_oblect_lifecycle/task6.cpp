@@ -21,11 +21,11 @@ Logger(): n
 #include <iostream>
 
 int main() {
-    int n;
+    size_t n;
     std::list<Logger> v1;
     std::cin >> n;
 
-    for (int i = 0; i != n; ++i) {
+    for (size_t i = 0; i != n; ++i) {
         v1.emplace_front();
     }
 }
