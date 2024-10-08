@@ -77,6 +77,7 @@ public:
 class Rectangle: public Figure {
 private:
     int side1, side2, side3, side4;
+    
 public:
     Rectangle(int a, int b):
     side1(a),
