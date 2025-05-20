@@ -23,3 +23,54 @@ JsonSerializer должен печатать упрощенную версию J
 Сдайте в систему только код классов, без функции main. 
 Для полной ясности формата вывода посмотрите на примеры из условия.
 */
+#include <iostream>
+#include <string>
+
+class Serializer {
+
+public:
+    virtual void BeginArray() = 0;
+    virtual void AddArrayItem(const std::string& n) = 0;
+    virtual void EndArray() = 0;
+
+    virtual ~Serializer() {
+    }
+};
+
+class JsonSerializer: public Serializer {
+private:
+    bool isFirst = true;
+
+public:
+    void BeginArray() override {
+        if(!isFirst) {
+            std::cout << ",[";
+        } else {
+            std::cout << '[';
+        }
+
+        isFirst = true;
+    }
+
+    void AddArrayItem(const std::string& n) override {
+        if(!isFirst) {
+            std::cout << ',';
+        }
+        std::cout << '"' << n << '"';
+        isFirst = false;
+    }
+
+    void EndArray() override {
+        std::cout << ']';
+        isFirst = false;
+    }
+};
+
+int main() {
+    JsonSerializer s;
+    s.BeginArray();
+    s.BeginArray();
+    s.AddArrayItem("Hi");
+    s.AddArrayItem("Hey");
+    s.EndArray();
+}
