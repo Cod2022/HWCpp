@@ -8,9 +8,9 @@
 
     Класс должен называться AdvancedVector.
 
-    У класса должен быть шаблонный параметр T — тип элементов.
+    У класса должен быть шаблонный параметр T — тип элементов. +
 
-    У класса должен быть конструктор по умолчанию.
+    У класса должен быть конструктор по умолчанию. +
 
     У класса должен быть конструктор копирования (возможно, предоставленный компилятором).
 
@@ -20,11 +20,11 @@
 
     У класса должны быть операторы сравнения == и !=.
 
-    У класса должны быть константные функции empty() и size().
+    У класса должны быть константные функции empty() и size(). +
 
-    У класса должны быть функции pop_back() и push_back(const T&).
+    У класса должны быть функции pop_back() и push_back(const T&). +
 
-    У класса должны быть константная и неконстантная версии оператора [].
+    У класса должны быть константная и неконстантная версии оператора []. +-
 
 В случае положительного индекса нужно вернуть элемент с соответствующим индексом, если он меньше размера вектора. 
 Иначе нужно бросить исключение std::out_of_range. 
@@ -35,6 +35,7 @@
 */
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 template <typename T>
 class AdvancedVector {
@@ -42,5 +43,50 @@ private:
     std::vector<T> data;
 
 public:
-    Vector() = default;
+    AdvancedVector() = default;
+
+    AdvancedVector(const std::vector<T>& v) : data(v) {}
+
+    bool empty() const {
+        if (!data.empty()) {
+            return false;
+        }
+        return true;
+    }
+
+    int size() const {
+        return data.size();
+    }
+
+    void pop_back() {
+        data.pop_back();
+    }
+
+    void push_back(const T& val) {
+        data.push_back(val);
+    }
+
+    const T& operator [] (int index) const {
+        if (std::abs(index) > data.size()) {
+            throw std::out_of_range("Index is out of range!");
+        }
+        return data[index];
+    }
+
+    T& operator [] (int i) {
+        return data[i];
+    }
 };
+
+int main() {
+    AdvancedVector<int> v({1, 2, 3, 4});
+    AdvancedVector<int> v2;
+
+    v.pop_back();
+    v.push_back(5);
+    v[0] = 8;
+    
+    std::cout << v.size() << "\n";
+    std::cout << v.empty() << "\n";
+    std::cout << v[-3];
+}
