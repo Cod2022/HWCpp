@@ -12,11 +12,11 @@
 
     У класса должен быть конструктор по умолчанию. +
 
-    У класса должен быть конструктор копирования (возможно, предоставленный компилятором).
+    У класса должен быть конструктор копирования (возможно, предоставленный компилятором). +
 
-    У класса должен быть шаблонный конструктор, принимающий два итератора и заполняющий вектор из данного диапазона.
+    У класса должен быть шаблонный конструктор, принимающий два итератора и заполняющий вектор из данного диапазона. +
 
-    У класса должен быть оператор присваивания (возможно, предоставленный компилятором).
+    У класса должен быть оператор присваивания (возможно, предоставленный компилятором). +
 
     У класса должны быть операторы сравнения == и !=. +
 
@@ -47,6 +47,9 @@ public:
 
     AdvancedVector(const std::vector<T>& v) : data(v) {}
 
+    template <typename Iter>
+    AdvancedVector(Iter first, Iter last) : data(first, last) {}
+
     bool empty() const {
         if (!data.empty()) {
             return false;
@@ -54,7 +57,7 @@ public:
         return true;
     }
 
-    int size() const {
+    size_t size() const {
         return data.size();
     }
 
@@ -67,7 +70,7 @@ public:
     }
 
     const T& operator [] (int index) const {
-        if (std::abs(index) > data.size()) {
+        if (std::abs(index) > static_cast<int>(data.size())) {
             throw std::out_of_range("Index is out of range!");
         }
         if (index < 0) {
@@ -77,7 +80,7 @@ public:
     }
 
     T& operator [] (int index) {
-        if (std::abs(index) > data.size()) {
+        if (std::abs(index) > static_cast<int>(data.size())) {
             throw std::out_of_range("Index is out of range!");
         }
         if (index < 0) {
@@ -107,8 +110,10 @@ public:
 
 int main() {
     AdvancedVector<int> v({1, 2, 3, 4});
-    //AdvancedVector<int> v2;
+    AdvancedVector<int> v2;
     AdvancedVector<int> v3({1, 2, 3, 4});
+    AdvancedVector<int> v4 = v3;
+    v = v3;
 
     // v.pop_back();
     // v.push_back(5);
@@ -116,7 +121,7 @@ int main() {
     // const int num = v[0];
     // v[-1] = 10;
 
-    if (v == v3) {
+    if (v == v4) {
         std::cout << "Equal\n";
     } 
     if (v != v3) {
