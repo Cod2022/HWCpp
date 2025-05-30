@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <vector>
-#include <utility>
 #include <memory>
 
 class TreeNode {
@@ -24,13 +23,11 @@ public:
     TreeNode(const TreeNode&) = delete;
     TreeNode& operator=(const TreeNode&) = delete;
 
-    std::unique_ptr<TreeNode> AddChild(int child_value) {
-        //auto node = new TreeNode(child_value);
+    TreeNode* AddChild(int child_value) {
         auto node = std::make_unique<TreeNode>(child_value);
         node->root = this;
-        //children.push_back(node);
         children.emplace_back(std::move(node));
-        return node;
+        return children.back().get();
     }
 
     void Print(int depth = 0) const {
@@ -64,5 +61,4 @@ int main() {
 Однако эта работающая на первый взгляд тестовая программа падает, 
 если её собрать с адресным санитайзером. Исправьте код класса TreeNode, 
 чтобы решить эту проблему.
-
 */
