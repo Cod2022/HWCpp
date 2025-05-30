@@ -16,7 +16,7 @@ class TreeNode {
 private:
     int value;
     TreeNode* root = nullptr;
-    std::vector<TreeNode*> children;
+    std::vector<std::unique_ptr<TreeNode>> children;
 
 public:
     TreeNode(int val): value(val) {}
