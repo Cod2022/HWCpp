@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <vector>
+#include <utility>
+#include <memory>
 
 class TreeNode {
 private:
@@ -23,9 +25,11 @@ public:
     TreeNode& operator=(const TreeNode&) = delete;
 
     TreeNode* AddChild(int child_value) {
-        auto node = new TreeNode(child_value);
+        //auto node = new TreeNode(child_value);
+        auto node = std::make_unique<TreeNode>(child_value);
         node->root = this;
-        children.push_back(node);
+        //children.push_back(node);
+        children.emplace_back(std::move(node));
         return node;
     }
 
