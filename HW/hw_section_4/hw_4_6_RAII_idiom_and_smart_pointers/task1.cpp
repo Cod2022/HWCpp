@@ -24,7 +24,7 @@ public:
     TreeNode(const TreeNode&) = delete;
     TreeNode& operator=(const TreeNode&) = delete;
 
-    TreeNode* AddChild(int child_value) {
+    std::unique_ptr<TreeNode> AddChild(int child_value) {
         //auto node = new TreeNode(child_value);
         auto node = std::make_unique<TreeNode>(child_value);
         node->root = this;
