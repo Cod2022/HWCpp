@@ -67,11 +67,13 @@ public:
     Monitor(const Monitor&) = delete;
     Monitor& operator=(const Monitor&) = delete;
 
+    // Изменённая и дописанная мной функция
     Ptr RegisterParticipant(const std::string& login, const std::string& team) {
         if (byParticipant.contains(login)) {
             throw std::invalid_argument("Participant is already registered");
         }
-        auto participant = std::make_shared<ParticipantResults>(login, team);
+        // Добавить новую запись об участнике и вернуть её
+        Ptr participant = std::make_shared<ParticipantResults>(login, team);
         byParticipant[login] = participant;
         byTeam[team].emplace_back(participant);
         allResults.emplace_back(participant);
