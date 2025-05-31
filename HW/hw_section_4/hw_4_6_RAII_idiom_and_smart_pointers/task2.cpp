@@ -55,8 +55,8 @@ struct ParticipantResults {
 class Monitor {
 private:
     // удобные псевдонимы типов для краткости:
-    using Ptr = ParticipantResults*;
-    using ConstPtr = const ParticipantResults*;
+    using Ptr = std::shared_ptr<ParticipantResults>;
+    using ConstPtr = std::shared_ptr<const ParticipantResults>;
 
     std::map<std::string, Ptr> byParticipant;
     std::map<std::string, std::vector<ConstPtr>> byTeam;
@@ -68,14 +68,14 @@ public:
     Monitor& operator=(const Monitor&) = delete;
 
     Ptr RegisterParticipant(const std::string& login, const std::string& team) {
-        // if (byParticipant.contains(login)) {
-        //     throw std::invalid_argument("Participant is already registered");
-        // }
+        if (byParticipant.contains(login)) {
+            throw std::invalid_argument("Participant is already registered");
+        }
         auto participant = std::make_shared<ParticipantResults>(login, team);
-        byParticipant[login] = participant.get();
-        allResults.emplace_back(std::move(participant.get()));
-        return participant.get();
-        // Добавить новую запись об участнике и вернуть её
+        byParticipant[login] = participant;
+        byTeam[team].emplace_back(participant);
+        allResults.emplace_back(participant);
+        return participant;
     }
 
     Ptr GetParticipantResults(const std::string& login) {
