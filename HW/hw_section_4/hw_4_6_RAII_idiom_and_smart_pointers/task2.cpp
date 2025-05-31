@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 struct ParticipantResults {
     std::string login;
@@ -32,11 +33,17 @@ struct ParticipantResults {
 
 В классе Monitor, который пишет Вася, должны быть следующие функции:
 
-1. RegisterParticipant(const std::string& login, const std::string& team) — регистрирует участника в указанной команде и возвращает (в каком-то виде) созданный для него ParticipantResults. Если участник с таким логином уже зарегистрирован, то выбрасывает исключение std::invalid_argument.
+1. RegisterParticipant(const std::string& login, const std::string& team) — регистрирует участника в указанной команде 
+и возвращает (в каком-то виде) созданный для него ParticipantResults. 
+Если участник с таким логином уже зарегистрирован, то выбрасывает исключение std::invalid_argument.
 
-2. GetParticipantResults(const std::string& login) — получает (в каком-то виде) ParticipantResults для данного участника. Если такого логина нет, выкидывает std::out_of_range. Должна быть константная версия (для отрисовки результатов) и неконстантная (для обновлений результатов после очередной посылки).
+2. GetParticipantResults(const std::string& login) — получает (в каком-то виде) ParticipantResults для данного участника. 
+Если такого логина нет, выкидывает std::out_of_range. 
+Должна быть константная версия (для отрисовки результатов) 
+и неконстантная (для обновлений результатов после очередной посылки).
 
-3. GetTeamResults(const std::string& team) const — возвращает (в каком-то виде) контейнер из ParticipantResults для данной команды. Если такой команды нет, выкидывает std::out_of_range.
+3. GetTeamResults(const std::string& team) const — возвращает (в каком-то виде) 
+контейнер из ParticipantResults для данной команды. Если такой команды нет, выкидывает std::out_of_range.
 
 4. GetAllResults() const — возвращает (в каком-то виде) контейнер всех результатов.
 
@@ -61,9 +68,13 @@ public:
     Monitor& operator=(const Monitor&) = delete;
 
     Ptr RegisterParticipant(const std::string& login, const std::string& team) {
-        if (byParticipant.contains(login)) {
-            throw std::invalid_argument("Participant is already registered");
-        }
+        // if (byParticipant.contains(login)) {
+        //     throw std::invalid_argument("Participant is already registered");
+        // }
+        auto participant = std::make_shared<ParticipantResults>(login, team);
+        byParticipant[login] = participant.get();
+        allResults.emplace_back(std::move(participant.get()));
+        return participant.get();
         // Добавить новую запись об участнике и вернуть её
     }
 
